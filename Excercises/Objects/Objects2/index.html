@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Object basics: Task 2</title>
+    <style>
+      p {
+        color: purple;
+        margin: 0.5em 0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+    </style>
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+
+  <body>
+
+    <section class="preview">
+
+
+
+    </section>
+
+  </body>
+  <script>
+    let bandInfo;
+
+    // Add your code here
+
+    const vulfpeck = {
+        name: 'Vulfpeck',
+        nationality: 'Ann Harbor, USA',
+        genre: 'funk',
+        members: 4,
+        formed: 2011,
+        split: false,
+        albums: [
+         {'Mit Peck': 2011},
+        {'My First Car': 2013},
+        {'Fugue State': 2014},
+        {'Sleepify': 2014},
+        {'Thrill of the Arts': 2015},
+        {'The Beautiful Game': 2016},
+        {'Mr. Finish Line': 2017},
+        {'Hill Climber': 2018},
+        {'Live at Madison Square Garden': 2019},
+        {'The Joy of Music, The Job of Real Estate': 2020}]
+    }
+
+    bandInfo = `You've heard of ${vulfpeck.name}, right? Of course you have! They 
+    are the hit of the decade! But did you know that they're from ${vulfpeck.nationality}?
+    Probably not. Formed in ${vulfpeck.formed}, they've been a huge leader in the 
+    ${vulfpeck.genre} scene! My favorite album '${Object.keys(vulfpeck.albums[0])}' came out
+    in ${vulfpeck.albums[0]['Mit Peck']}, I highly recomend a listen!`;
+
+    // Don't edit the code below here!
+
+    const section = document.querySelector('section');
+    let para1 = document.createElement('p');
+    para1.textContent = bandInfo;
+    section.appendChild(para1);
+  </script>
+
+</html>
