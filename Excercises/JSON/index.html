@@ -41,6 +41,7 @@
     function displayCatInfo(catString) {
       let total = 0;
       let male = 0;
+      
 
       // Add your code here
       const cats = JSON.parse(catString);
@@ -52,6 +53,19 @@
         } else {
           motherInfo += `${cat.name}, `;
         }
+
+
+        for (const kitten of cat.kittens) {
+
+          total++;
+
+          if (kitten.gender === 'm') {
+            male++;
+          }
+      
+        }
+
+        kittenInfo = `The total number of kittens is ${total}. There are ${male} males and ${total - male} females.`;
 
       }
 
