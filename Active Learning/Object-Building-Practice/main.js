@@ -19,6 +19,9 @@ function randomRGB() {
   return `rgb(${random(0, 255)},${random(0, 255)},${random(0, 255)})`;
 }
 
+
+// ball constructor with methods to draw new ball and change velocity
+
 class Ball {
   constructor(x, y, velX, velY, color, size) {
     this.x = x;
@@ -56,4 +59,28 @@ class Ball {
       this.x += this.velX;
       this.y += this.velY;
       }
+    }
+
+    // storing balls
+
+    const balls = [];
+
+    // create new balls loop
+
+    while (balls.length < 25) {
+      const size = random(10, 20);
+      const ball = new Ball(
+        // ball position always drawn at least one ball width
+        // away from the edge of the canvas to avoid drawing
+        // errors
+        random(0 + size, width - size),
+        random(0 + size, height - size),
+        random(-7, 7),
+        random(-7, 7),
+        randomRGB(),
+        size
+      );
+
+      balls.push(ball);
+
     }
