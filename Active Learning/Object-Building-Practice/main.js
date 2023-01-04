@@ -20,7 +20,6 @@ function randomRGB() {
 }
 
 
-// ball constructor with methods to draw new ball and change velocity
 
 class Ball {
   constructor(x, y, velX, velY, color, size) {
@@ -32,6 +31,7 @@ class Ball {
     this.size = size;
   }
 
+ // draws ball
     draw() {
       ctx.beginPath();
       ctx.fillStyle = this.color;
@@ -39,6 +39,8 @@ class Ball {
       ctx.fill();
   }
 
+ // changes velocity of ball to prevent the ball going off the
+ // page
     update() {
       if((this.x + this.size) >= width) {
         this.velX = -(this.velX);
@@ -84,3 +86,23 @@ class Ball {
       balls.push(ball);
 
     }
+
+  
+ // recursively calls loop function via requsetAnimationFrame
+ // (loop) method
+    function loop() {
+      // set canvas color and add transparency to allow ball trails via 4th argument in fillStyle
+      ctx.fillStyle = "rgba(0,0,0,0.25)";
+      ctx.fillRect(0,0, width, height);
+
+    // loop through balls array to draw ball in a new place
+    // and adjust velocity for the next frame
+      for (const ball of balls) {
+        ball.draw();
+        ball.update();
+      }
+
+      requestAnimationFrame(loop);
+    }
+
+    loop();
