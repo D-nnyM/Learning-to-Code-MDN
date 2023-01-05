@@ -39,8 +39,8 @@ class Ball {
       ctx.fill();
   }
 
- // changes velocity of ball to prevent the ball going off the
- // page
+    // changes velocity of ball to prevent the ball going off the
+    // page
     update() {
       if((this.x + this.size) >= width) {
         this.velX = -(this.velX);
@@ -60,6 +60,23 @@ class Ball {
       
       this.x += this.velX;
       this.y += this.velY;
+      }
+
+    // check area of the current ball being looped through
+    // against balls in the array to see if they overlap,
+    // if so, change color
+      collisionDetect() {
+        for (const ball of balls) {
+          if (this !== ball) {
+            const dx = this.x - ball.x;
+            const dy = this.y - ball.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < this.size + ball.size) {
+              ball.color = this.color = randomRGB();
+            }
+          }
+        }
       }
     }
 
@@ -95,11 +112,13 @@ class Ball {
       ctx.fillStyle = "rgba(0,0,0,0.25)";
       ctx.fillRect(0,0, width, height);
 
-    // loop through balls array to draw ball in a new place
-    // and adjust velocity for the next frame
+    // loop through balls array to draw ball in a new place,
+    // adjust velocity for the next frame,
+    // check if balls collide
       for (const ball of balls) {
         ball.draw();
         ball.update();
+        ball.collisionDetect();
       }
 
       requestAnimationFrame(loop);
