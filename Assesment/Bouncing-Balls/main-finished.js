@@ -7,14 +7,12 @@ const width = canvas.width = window.innerWidth;
 const height = canvas.height = window.innerHeight;
 
 // function to generate random number
-
 function random(min, max) {
   const num = Math.floor(Math.random() * (max - min + 1)) + min;
   return num;
 }
 
 // function to generate random color
-
 function randomRGB() {
   return `rgb(${random(0, 255)},${random(0, 255)},${random(0, 255)})`;
 }
@@ -42,20 +40,20 @@ class Ball {
     // changes velocity of ball to prevent the ball going off the
     // page
     update() {
-      if((this.x + this.size) >= width) {
-        this.velX = -(this.velX);
+      if ((this.x + this.size) >= width) {
+        this.velX = -(Math.abs(this.velX));
       }
 
-      if((this.x - this.size) <= 0) {
-        this.velX = -(this.velX);
+      if ((this.x - this.size) <= 0) {
+        this.velX = -(Math.abs(this.velX));
       }
 
-      if((this.y + this.size) >= height) {
-        this.velY = -(this.velY);
+      if ((this.y + this.size) >= height) {
+        this.velY = -(Math.abs(this.velY));
       }
 
-      if((this.y - this.size) <= 0) {
-        this.velY = -(this.velY);
+      if ((this.y - this.size) <= 0) {
+        this.velY = -(Math.abs(this.velY));
       }
       
       this.x += this.velX;
@@ -67,7 +65,7 @@ class Ball {
     // if so, change color
       collisionDetect() {
         for (const ball of balls) {
-          if (this !== ball) {
+          if (!(this === ball)) {
             const dx = this.x - ball.x;
             const dy = this.y - ball.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
@@ -81,11 +79,9 @@ class Ball {
     }
 
     // storing balls
-
     const balls = [];
 
     // create new balls loop
-
     while (balls.length < 25) {
       const size = random(10, 20);
       const ball = new Ball(
@@ -101,7 +97,6 @@ class Ball {
       );
 
       balls.push(ball);
-
     }
 
   
