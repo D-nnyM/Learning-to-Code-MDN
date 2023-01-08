@@ -28,24 +28,40 @@ class Shape {
 
 class EvilCircle extends Shape {
     constructor (x, y) {
-        super(x, y, 20, 20)
-        this.color = white;
+        super(x, y, 3, 3)
+        this.color = 'red';
         this.size = 10;
 
         window.addEventListener('keydown', (e) => {
             switch (e.key) {
+                // case 'a' && 's':
+                //     this.x -= this.velX;
+                //     this.y += this.velY;
+                //     break;
+                // case 'a' && 'w':
+                //     this.x -= this.velX;
+                //     this.y -= this.velY;
+                //     break;
+                // case 'd' && 's':
+                //     this.x += this.velX;
+                //     this.y += this.velY;
+                //     break;
+                // case 'd' && 'w':
+                //     this.x += this.velX;
+                //     this.y -= this.velY;
+                //     break; 
                 case 'a':
                     this.x -= this.velX;
                     break;
                 case 'd':
                     this.x += this.velX;
-                    break;
+                     break;    
                 case 'w':
                     this.y -= this.velY;
                     break;
                 case 's':
                     this.y += this.velY;
-                    break;
+                    break;          
             }
         });
     }
@@ -61,19 +77,19 @@ class EvilCircle extends Shape {
 
     checkBounds() {
         if ((this.x + this.size) >= width) {
-          this.x = this.size--;
+          this.x = this.x - 10;
         }
   
         if ((this.x - this.size) <= 0) {
-          this.x = this.size++;
+          this.x = this.x + 10;
         }
   
         if ((this.y + this.size) >= height) {
-          this.y = this.size--;
+          this.y = this.y - 10;
         }
   
         if ((this.y - this.size) <= 0) {
-          this.y = this.size++;
+          this.y = this.y + 10;
         }
         
     }
@@ -86,12 +102,12 @@ class EvilCircle extends Shape {
             const distance = Math.sqrt(dx * dx + dy * dy);
 
             if (distance < this.size + ball.size) {
-              balls = balls.slice(ball, ball + 1);
+              ball.exists = false;
             }
+
           }
         }
-      }
-
+     }
 }
 
 
@@ -111,8 +127,7 @@ class Ball extends Shape {
       ctx.fill();
     }
 
-    // changes velocity of ball to prevent the ball going off the
-    // page
+    // changes velocity of ball to prevent the ball going off the page
     update() {
       if ((this.x + this.size) >= width) {
         this.velX = -(Math.abs(this.velX));
@@ -134,9 +149,7 @@ class Ball extends Shape {
       this.y += this.velY;
     }
 
-    // check area of the current ball being looped through
-    // against balls in the array to see if they overlap,
-    // if so, change color
+    // check area of the current ball being looped through against balls in the array to see if they overlap, if so, change color
     collisionDetect() {
         for (const ball of balls) {
         if (!(this === ball) && ball.exists) {
@@ -153,43 +166,45 @@ class Ball extends Shape {
 
 }
 
-// storing balls
 const balls = [];
+let evilCircle = new EvilCircle(width, height);
 
 // create new balls loop
 while (balls.length < 25) {
     const size = random(10, 20);
+
     const ball = new Ball(
-    // ball position always drawn at least one ball width
-     // away from the edge of the canvas to avoid drawing
-    // errors
+    // ball position always drawn at least one ball width away from the edge of the canvas to avoid drawing errors
     random(0 + size, width - size),
     random(0 + size, height - size),
     random(-7, 7),
     random(-7, 7),
     randomRGB(),
-    size
+    size,
     );
 
     balls.push(ball);
 }
 
   
-// recursively calls loop function via requsetAnimationFrame
-// (loop) method
+// recursively calls loop function via requsetAnimationFrame(loop) method
 function loop() {
     // set canvas color and add transparency to allow ball trails via 4th argument in fillStyle
     ctx.fillStyle = "rgba(0,0,0,0.25)";
     ctx.fillRect(0,0, width, height);
 
-    // loop through balls array to draw ball in a new place,
-    // adjust velocity for the next frame,
-    // check if balls collide
+    // loop through balls array to draw ball in a new place, adjust velocity for the next frame, check if balls collide
     for (const ball of balls) {
-        ball.draw();
-        ball.update();
-        ball.collisionDetect();
+        if (ball.exists) {
+            ball.draw();
+            ball.update();
+            ball.collisionDetect();
+        }
     }
+
+    evilCircle.draw();
+    evilCircle.checkBounds();
+    evilCircle.collisionDetect();
 
 
     requestAnimationFrame(loop);
