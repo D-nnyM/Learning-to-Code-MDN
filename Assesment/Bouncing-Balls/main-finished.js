@@ -2,6 +2,8 @@
 
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
+const body = document.querySelector('body');
+const ballCountDisplay = document.querySelector('.ballCount');
 
 const width = canvas.width = window.innerWidth;
 const height = canvas.height = window.innerHeight;
@@ -27,43 +29,27 @@ class Shape {
 }
 
 class EvilCircle extends Shape {
-    constructor (x, y) {
-        super(x, y, 3, 3)
-        this.color = 'red';
+    constructor (x, y, color) {
+        super(x, y, 15, 15);
         this.size = 10;
+        this.color = color;
 
-        window.addEventListener('keydown', (e) => {
+        window.addEventListener("keydown", (e) => {
             switch (e.key) {
-                // case 'a' && 's':
-                //     this.x -= this.velX;
-                //     this.y += this.velY;
-                //     break;
-                // case 'a' && 'w':
-                //     this.x -= this.velX;
-                //     this.y -= this.velY;
-                //     break;
-                // case 'd' && 's':
-                //     this.x += this.velX;
-                //     this.y += this.velY;
-                //     break;
-                // case 'd' && 'w':
-                //     this.x += this.velX;
-                //     this.y -= this.velY;
-                //     break; 
-                case 'a':
-                    this.x -= this.velX;
-                    break;
-                case 'd':
-                    this.x += this.velX;
-                     break;    
-                case 'w':
-                    this.y -= this.velY;
-                    break;
-                case 's':
-                    this.y += this.velY;
-                    break;          
+              case "a":
+                this.x -= this.velX;
+                break;
+              case "d":
+                this.x += this.velX;
+                break;
+              case "w":
+                this.y -= this.velY;
+                break;
+              case "s":
+                this.y += this.velY;
+                break;
             }
-        });
+          });
     }
 
     //draws evil circle
@@ -103,6 +89,9 @@ class EvilCircle extends Shape {
 
             if (distance < this.size + ball.size) {
               ball.exists = false;
+              ballCount--;
+              ballCountDisplay.textContent = `Ball count: ${ballCount}`;
+              body.appendChild(ballCountDisplay);
             }
 
           }
@@ -166,8 +155,11 @@ class Ball extends Shape {
 
 }
 
+
+
 const balls = [];
-let evilCircle = new EvilCircle(width, height);
+let evilCircle = new EvilCircle(width * .25, height * .25, 'cyan');
+let ballCount = 0;
 
 // create new balls loop
 while (balls.length < 25) {
@@ -184,6 +176,10 @@ while (balls.length < 25) {
     );
 
     balls.push(ball);
+    ballCount++;
+    ballCountDisplay.textContent = `Ball count: ${ballCount}`;
+    body.appendChild(ballCountDisplay);
+
 }
 
   
