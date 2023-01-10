@@ -31,19 +31,3 @@ html, body {
     right: 5px;
     color: #aaa;
   }
-
-  .player1 {
-    position: absolute;
-    margin: 0;
-    top: 65px;
-    right: 5px;
-    color: #aaa;
-  }
-  
-  .player2 {
-    position: absolute;
-    margin: 0;
-    top: 90px;
-    right: 5px;
-    color: #aaa;
-  }
